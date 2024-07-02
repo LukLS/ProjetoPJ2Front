@@ -1,6 +1,5 @@
 import React from "react";
 import "./UpdateAdvogado.css";
-import Card from "../../components/Card";
 import FormGroup from "../../components/FormGroup";
 import axios from "axios";
 
@@ -38,7 +37,6 @@ cancel = () =>{
         render(){
             return(
                 <div className="container">
-                    <Card title="Update Lutador">
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="bs-component">
@@ -75,7 +73,6 @@ cancel = () =>{
                     </div>
                 </div>
             </div>
-        </Card>
     </div>
     )
   }

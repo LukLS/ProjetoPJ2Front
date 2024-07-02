@@ -20,10 +20,10 @@ function Navbar(props){
         
         <div className="collapse navbar-collapse" id="navbarResponsive">
             <ul className="navbar-nav">
-                <NavbarItem href="/casos" label="Casos" />         
-                <NavbarItem href="/projetos" label="Projetos" />  
-                <NavbarItem href="/createAdvogado" label="Usuários" />
-                <NavbarItem href="/listarUsuarios" label="Clientes" />
+                <NavbarItem href="/sessao/casos" label="Casos" />         
+                <NavbarItem href="/sessao/projetos" label="Projetos" />  
+                <NavbarItem href="/sessao/createAdvogado" label="Usuários" />
+                <NavbarItem href="/sessao/listarUsuarios" label="Clientes" />
             </ul>
         </div>
     </div>

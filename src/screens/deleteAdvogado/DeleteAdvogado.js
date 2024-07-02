@@ -1,6 +1,5 @@
 import React from "react";
 import "./DeleteAdvogado.css";
-import Card from "../../components/Card";
 import FormGroup from "../../components/FormGroup";
 import axios from "axios";
 
@@ -30,7 +29,6 @@ export default class DeleteAdvogado extends React.Component{
       render(){
         return(
             <div className="container">
-                <Card title="Delete UFC">
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="bs-component">
@@ -51,7 +49,6 @@ export default class DeleteAdvogado extends React.Component{
                 </div>
             </div>
         </div>
-    </Card>
 </div>
 )
 }
