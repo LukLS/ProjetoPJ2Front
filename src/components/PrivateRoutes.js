@@ -1,10 +1,16 @@
-import { useContext } from "react"
-import { AuthContext } from "./AuthContext"
-import { Outlet, useHistory } from 'react-router-dom';
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { Outlet, useNavigate } from 'react-router-dom';
 
 export const PrivateRoute = () => {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { signed } = useContext(AuthContext);
-    
-    return signed ? <Outlet /> : history.push("/");
+
+    useEffect(() => {
+        if (!signed) {
+            navigate("/");
+        }
+    }, [signed, navigate]);
+
+    return signed ? <Outlet /> : null;
 };

@@ -8,7 +8,7 @@ import { useNavigate, Link } from 'react-router-dom';
 export const Login = () => {
     const [login, setLogin] = useState('');
     const [senha, setSenha] = useState('');
-    const [error, setError] = useState(''); // Estado para a mensagem de erro
+    const [error, setError] = useState('');
     const { signIn } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ export const Login = () => {
         if (error) {
             timer = setTimeout(() => {
                 setError('');
-            }, 4500); // Limpar a mensagem de erro após 7 segundos
+            }, 4500); // Limpar a mensagem de erro após 4.5 segundos
         }
         return () => clearTimeout(timer); // Limpar o timer ao desmontar o componente
     }, [error]);
@@ -76,9 +76,10 @@ export const Login = () => {
                                 style={{ marginTop: '25px', width: '245px' }}
                                 value={senha}
                                 onChange={handleChange(setSenha)}
+                                type="password"
                             />
                             {error && (
-                                <div style={{ color: 'red', fontSize: '12px',fontFamily: 'Inter', marginTop: '8px', textAlign: 'center', width: '100%' }}>
+                                <div style={{ color: 'red', fontSize: '12px', fontFamily: 'Inter', marginTop: '8px', textAlign: 'center', width: '100%' }}>
                                     {error}
                                 </div>
                             )}

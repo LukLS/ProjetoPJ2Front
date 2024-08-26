@@ -1,0 +1,21 @@
+/* Casos.css */
+
+/* Remover a borda extra para campos nesta página */
+.casos-page .MuiFilledInput-root {
+    border-bottom: none !important;
+  }
+  
+  /* Estilo específico para o campo de cliente */
+  .casos-page .custom-select {
+    margin-top: 12px;
+    width: 90%;
+  }
+  
+  /* Ajuste do label para o filtro */
+  .casos-page .filter-label {
+    color: #838383;
+    font-size: 14px;
+    font-family: 'Inter';
+    font-weight: 400;
+  }
+  
