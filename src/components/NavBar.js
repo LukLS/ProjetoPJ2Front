@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import NavbarItem from "./NavbarItem";
 import 'bootswatch/dist/sketchy/bootstrap.css';
 
@@ -14,12 +15,15 @@ function Navbar() {
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarResponsive">
-                    <ul className="navbar-nav">
+                    <ul className="navbar-nav me-auto">
                         <NavbarItem href="/sessao/casos" label="Casos" />
                         <NavbarItem href="/sessao/projetos" label="Projetos" />
                         <NavbarItem href="/sessao/createAdvogado" label="Usuários" />
                         <NavbarItem href="/sessao/listarUsuarios" label="Clientes" />
                     </ul>
+                    <Link to="/sessao/home" className="navbar-brand ms-auto">
+                        H
+                    </Link>
                 </div>
             </div>
         </div>

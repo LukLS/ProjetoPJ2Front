@@ -13,6 +13,7 @@ import NavBarLayout from '../components/NavBarLayout';  // Importar o NavBarLayo
 import Projetos from '../screens/projetos/processos/Projetos';
 import Status from '../screens/projetos/status/Status';
 import Anexos from '../screens/projetos/anexos/Anexos'
+import Home from '../screens/home/home'
 
 function AppRoutes() {
     return (
@@ -31,6 +32,7 @@ function AppRoutes() {
                             <Route path="projetos" element={<Projetos/>}/>
                             <Route path="status" element={<Status/>}/>
                             <Route path="anexos" element={<Anexos/>}/>
+                            <Route path="home" element={<Home/>}/>
                         </Route>
                     </Route>
                     <Route path="*" element={<Navigate to="/" />} />

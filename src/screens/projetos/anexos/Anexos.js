@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Anexos.css";
-import { TextField, Button, ButtonGroup, Snackbar, Alert, Chip, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Button, ButtonGroup, Snackbar, Alert, Chip, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -17,11 +17,7 @@ const Anexos = () => {
     });
 
     const [projetos, setProjetos] = useState([]);
-    const [tags, setTags] = useState([]);
-    const tagInputRef = useRef(null);
-
     const [files, setFiles] = useState([]);
-    const [fileHistory, setFileHistory] = useState([]);
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -50,19 +46,6 @@ const Anexos = () => {
 
     const handleChange = (campo) => (event) => {
         setState({ ...state, [campo]: event.target.value });
-    };
-
-    const handleTagChange = (event, newValue) => {
-        setTags(newValue);
-        if (tagInputRef.current) {
-            setTimeout(() => {
-                tagInputRef.current.focus();
-            }, 100);
-        }
-    };
-
-    const handleDeleteTag = (tagToDelete) => () => {
-        setTags((tags) => tags.filter((tag) => tag !== tagToDelete));
     };
 
     const handleFileChange = (event) => {
@@ -95,7 +78,7 @@ const Anexos = () => {
                 descricao: state.descricao || processoAtual.descricao,
                 prazo: state.prazo || processoAtual.prazo,
                 registroReceita: state.registroReceita || processoAtual.registroReceita,
-                tag: tags.length > 0 ? tags : processoAtual.tag,
+                tag: state.tag || processoAtual.tag,
                 status: state.status || processoAtual.status,
             };
     
@@ -210,14 +193,7 @@ const Anexos = () => {
                                 <div style={{ marginTop: '20px', marginLeft: '30px' }}>
                                     <Box sx={{ maxHeight: 350, overflow: 'auto' }}>
                                         <h4>Histórico de Alterações</h4>
-                                        {fileHistory.map((entry, index) => (
-                                            <div key={index}>
-                                                <p><strong>Data:</strong> {entry.date}</p>
-                                                <p><strong>Usuário:</strong> {entry.user}</p>
-                                                <p><strong>Arquivos:</strong> {entry.files.join(', ')}</p>
-                                                <hr />
-                                            </div>
-                                        ))}
+                                        {/* Remover ou ajustar a exibição do histórico de arquivos, se não for usado */}
                                     </Box>
                                 </div>
                             </div>

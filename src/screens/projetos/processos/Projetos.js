@@ -148,9 +148,7 @@ const Projetos = () => {
       });
   
       if (response.ok) {
-        const responseData = await response.json();
-        const numeroProcesso = responseData.numeroProcesso;
-  
+
         setSnackbarMessage("Processo salvo com sucesso!");
         setSnackbarSeverity("success");
         setSnackbarOpen(true);

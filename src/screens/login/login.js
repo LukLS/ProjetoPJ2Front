@@ -19,7 +19,7 @@ export const Login = () => {
                 setError('');
             }, 4500); // Limpar a mensagem de erro após 4.5 segundos
         }
-        return () => clearTimeout(timer); // Limpar o timer ao desmontar o componente
+        return () => clearTimeout(timer); 
     }, [error]);
 
     const handleChange = (setter) => (event) => {
@@ -36,13 +36,13 @@ export const Login = () => {
         try {
             const success = await signIn(data);
             if (success) {
-                setError(''); // Limpar a mensagem de erro em caso de sucesso
-                navigate("/sessao/listarUsuarios");
+                setError('');
+                navigate("/sessao/home");
             } else {
                 setError("Dados incorretos");
             }
         } catch (error) {
-            setError("Dados incorretos"); // Define a mensagem de erro em caso de exceção
+            setError("Dados incorretos"); 
             console.log("Error during login:", error.response || error.message);
         }
     }

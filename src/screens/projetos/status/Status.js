@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Button, ButtonGroup, Snackbar, Alert, Box, MenuItem, Autocomplete } from "@mui/material";
+import {
+    TextField,
+    Button,
+    ButtonGroup,
+    Snackbar,
+    Alert,
+    Box,
+    MenuItem,
+    Autocomplete
+} from "@mui/material";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from "axios";
 
 const statusOptions = [
     { value: 'ATIVO', label: 'Ativo' },
@@ -55,15 +64,7 @@ const Status = () => {
     const [state, setState] = useState({
         projeto: null,
         status: '',
-        descricaoStatus: '',
-        titulo: '',
-        descricao: '',
-        prazo: '',
-        registroReceita: '',
-        clienteId: null,
-        files: [],
-        tag: [],
-        historico: []
+        descricaoStatus: ''
     });
 
     const [projetos, setProjetos] = useState([]);
@@ -94,58 +95,63 @@ const Status = () => {
     }
 
     const handleAutocompleteChange = (event, value) => {
-        setState({
-            ...state,
-            projeto: value,
-            titulo: value?.titulo || '',
-            descricao: value?.descricao || '',
-            prazo: value?.prazo || '',
-            registroReceita: value?.registroReceita || '',
-            clienteId: value?.clienteId || null,
-            files: value?.files || [],
-            tag: value?.tag || [],
-            historico: value?.historico || []
-        });
+        setState({ ...state, projeto: value });
     }
 
     const salvarStts = async () => {
         const processo = {
-            projetoId: state.projeto?.id,
-            titulo: state.titulo,
-            descricao: state.descricao,
-            prazo: state.prazo,
-            registroReceita: state.registroReceita,
-            cliente: state.clienteId,
+            id: state.projeto?.id, // ID do projeto
+            titulo: state.projeto?.titulo,
+            descricao: state.projeto?.descricao,
+            prazo: state.projeto?.prazo,
+            registroReceita: state.projeto?.registroReceita,
+            tag: state.projeto?.tag,
             status: state.status,
-            descricaoStatus: state.descricaoStatus,
-            files: state.files,
-            tag: state.tag,
-            historico: state.historico
+            historico: state.projeto?.historico,
+            cliente: state.projeto?.cliente,
+            files: state.projeto?.files, // Supondo que você já tenha os arquivos em `state.projeto.files`
         };
-
+    
+        const formData = new FormData();
+        formData.append("processoDTO", JSON.stringify(processo)); // Adiciona o objeto como JSON
+    
+        // Se você tiver arquivos para enviar
+        if (state.projeto?.files) {
+            for (const file of state.projeto.files) {
+                formData.append("files", file); // Adiciona cada arquivo ao formData
+            }
+        }
+    
         try {
-            console.log("PROCESSO ID É " + processo.projetoId);
-            console.log("O PROCESSO É " + JSON.stringify(processo));
-
-            const response = await axios.put(`http://localhost:8080/api/processo/${processo.projetoId}`, processo);
-
-            if (response.status >= 200 && response.status < 300) {
+            const response = await axios.put(
+                `http://localhost:8080/api/processo/${processo.id}`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+    
+            if (response.status === 200) {
                 setSnackbarMessage("Status atualizado com sucesso!");
                 setSnackbarSeverity("success");
                 setSnackbarOpen(true);
-
-                navigate("/sessao/status", { state: { numeroProcesso: processo.projetoId } });
+                navigate("/sessao/status", { state: { numeroProcesso: processo.id } });
             } else {
                 setSnackbarMessage("Erro ao atualizar o status.");
                 setSnackbarSeverity("error");
                 setSnackbarOpen(true);
             }
         } catch (error) {
+            console.error("Erro ao atualizar o status:", error);
             setSnackbarMessage("Erro ao atualizar o status.");
             setSnackbarSeverity("error");
             setSnackbarOpen(true);
         }
-    }
+    };   
+    
+    
 
     const cancel = () => {
         console.log('cancel');
@@ -154,7 +160,7 @@ const Status = () => {
     const handleCloseSnackbar = () => {
         setSnackbarOpen(false);
     };
-    
+
     return (
         <div className="container">
             <div className="row">
