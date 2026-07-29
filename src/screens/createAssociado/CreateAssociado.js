@@ -125,6 +125,7 @@ const CreateAssociado = () => {
                     onChange={handleChange('login')}
                     error={!!errors.login}
                     helperText={errors.login}
+                    autoComplete="off"
                   />
                   <CustomTextField
                     label="SENHA"
@@ -133,6 +134,7 @@ const CreateAssociado = () => {
                     onChange={handleChange('senha')}
                     error={!!errors.senha}
                     helperText={errors.senha}
+                    autoComplete="new-password"
                   />
                   <CustomTextField
                     label="NOME"
