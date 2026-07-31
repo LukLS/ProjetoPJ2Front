@@ -1,0 +1,113 @@
+/* Container principal - Alinhamento Centralizado */
+.status-wrapper {
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+/* Abas Superiores */
+.tab-group {
+  height: 30px !important;
+}
+
+.tab-btn-active {
+  background-color: grey !important;
+  font-size: 10px !important;
+  width: 120px !important;
+}
+
+.tab-btn-inactive {
+  background-color: white !important;
+  color: grey !important;
+  font-size: 10px !important;
+  width: 120px !important;
+}
+
+/* Card Principal (dimensões e borda idênticas) */
+.status-card {
+  width: 1100px;
+  min-height: 410px;
+  background-color: white;
+  border: 2px solid #838383;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+/* Rótulos/Labels */
+.field-label {
+  color: #838383;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  word-wrap: break-word;
+  width: 200px;
+  margin-bottom: 3px;
+  margin-top: 6px;
+}
+
+/* Estilização dos Inputs Material-UI */
+.custom-textfield {
+  width: 250px !important;
+}
+
+.custom-textfield .MuiFilledInput-root {
+  background-color: #f0f0f0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Inputs de linha única */
+.custom-textfield .MuiInputBase-root:not(.MuiInputBase-multiline) {
+  height: 30px !important;
+}
+
+/* Textarea de Descrição do Status */
+.custom-textfield .MuiInputBase-root.MuiInputBase-multiline {
+  height: auto !important;
+  padding: 6px 10px !important;
+}
+
+/* Alinhamento interno de texto */
+.custom-textfield input {
+  padding: 0 10px !important;
+  font-size: 13px !important;
+  height: 30px !important;
+  box-sizing: border-box !important;
+}
+
+.custom-textfield textarea {
+  padding: 0 !important;
+  font-size: 13px !important;
+}
+
+/* Autocomplete do Projeto */
+.custom-autocomplete {
+  width: 250px !important;
+}
+
+.custom-autocomplete .MuiInputBase-root {
+  height: 32px !important;
+  padding: 0 10px !important;
+}
+
+.custom-autocomplete .MuiInputBase-root input {
+  height: 20px !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+}
+
+/* Barra de Ações do Rodapé */
+.actions-container {
+  margin-top: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  width: 1100px;
+  justify-content: space-between;
+}
+
+.action-btn {
+  width: 120px !important;
+  height: 38px !important;
+  background-color: grey !important;
+}

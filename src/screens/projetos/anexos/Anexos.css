@@ -1,0 +1,117 @@
+/* Container principal - Alinhamento Centralizado */
+.anexos-wrapper {
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+/* Abas Superiores */
+.tab-group {
+  height: 30px !important;
+}
+
+.tab-btn-active {
+  background-color: grey !important;
+  font-size: 10px !important;
+  width: 120px !important;
+}
+
+.tab-btn-inactive {
+  background-color: white !important;
+  color: grey !important;
+  font-size: 10px !important;
+  width: 120px !important;
+}
+
+/* Card Principal */
+.anexos-card {
+  width: 1100px;
+  min-height: 410px;
+  background-color: white;
+  border: 2px solid #838383;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+/* Rótulos/Labels */
+.field-label {
+  color: #838383;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+
+/* Estilo para a caixa de Select do Projeto */
+.custom-select-control {
+  width: 300px !important;
+  margin-bottom: 20px !important;
+}
+
+.custom-select-control .MuiInputBase-root {
+  height: 36px !important;
+  font-size: 13px !important;
+}
+
+/* Input de Upload e Chips */
+.file-input {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #555;
+}
+
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* Container do Histórico */
+.history-container {
+  max-height: 200px;
+  overflow-y: auto;
+  border-top: 1px solid #ddd;
+  padding-top: 16px;
+  margin-top: 20px;
+}
+
+.history-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-item {
+  margin-bottom: 6px;
+  color: #444;
+  font-size: 13px;
+}
+
+.empty-history {
+  color: #888;
+  font-size: 13px;
+}
+
+/* Barra de Ações do Rodapé */
+.actions-container {
+  margin-top: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  width: 1100px;
+  justify-content: space-between;
+}
+
+.action-btn {
+  width: 120px !important;
+  height: 38px !important;
+  background-color: grey !important;
+}
