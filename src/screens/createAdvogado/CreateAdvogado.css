@@ -1,3 +1,101 @@
-.contained{
-    marginTop: '100px'
+/* Container principal - Alinhamento Centralizado */
+.create-advogado-wrapper {
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+/* Abas Superiores */
+.tab-group {
+  height: 30px !important;
+}
+
+.tab-btn-active {
+  background-color: grey !important;
+  font-size: 10px !important;
+  width: 120px !important;
+}
+
+.tab-btn-inactive {
+  background-color: white !important;
+  color: grey !important;
+  font-size: 10px !important;
+  width: 120px !important;
+}
+
+/* Card Principal */
+.advogado-card {
+  width: 1100px;
+  min-height: 410px;
+  background-color: white;
+  border: 2px solid #838383;
+  padding-bottom: 20px;
+}
+
+.advogado-grid-container {
+  margin-top: 5px !important;
+  padding: 0 30px !important;
+}
+
+/* Títulos das Seções ("Dados pessoais" e "OAB") */
+.section-title {
+  color: #838383;
+  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+/* Rótulos/Labels iguais ao Projetos.css */
+.field-label {
+  color: #838383;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  word-wrap: break-word;
+  width: 250px;
+  margin-bottom: 3px;
+  margin-top: 4px;
+}
+
+/* Estilização dos Inputs Material-UI - Exatamente igual ao Projetos.css */
+.custom-textfield {
+  width: 250px !important;
+}
+
+/* Fundo cinza sem sobreposição e padding interno zerado */
+.custom-textfield .MuiFilledInput-root {
+  background-color: #f0f0f0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Inputs de linha única com altura reduzida (30px) */
+.custom-textfield .MuiInputBase-root:not(.MuiInputBase-multiline) {
+  height: 30px !important;
+}
+
+/* Alinhamento de texto interno */
+.custom-textfield input {
+  padding: 0 10px !important;
+  font-size: 13px !important;
+  height: 30px !important;
+  box-sizing: border-box !important;
+}
+
+/* Barra de Ações do Rodapé */
+.actions-container {
+  margin-top: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  width: 1100px;
+  justify-content: space-between;
+}
+
+.action-btn {
+  width: 120px !important;
+  height: 38px !important;
+  background-color: grey !important;
 }

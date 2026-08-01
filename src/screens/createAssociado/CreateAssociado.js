@@ -1,179 +1,166 @@
 import React, { useState } from "react";
 import "./CreateAssociado.css";
 import axios from "axios";
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import { TextField, Button, ButtonGroup, Snackbar, Alert, Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import CustomTextField from '../../components/CustomTextField';
+
+const INITIAL_STATE = {
+  login: '',
+  senha: '',
+  nome: '',
+  cpf: '',
+  dataDeNascimento: ''
+};
+
+// Componente FormField padronizado
+const FormField = ({ label, value, onChange, error, helperText, type, autoComplete }) => (
+  <Box sx={{ marginBottom: 1 }}>
+    <div className="field-label">{label}</div>
+    <TextField
+      hiddenLabel
+      variant="filled"
+      size="small"
+      type={type}
+      autoComplete={autoComplete}
+      className="custom-textfield"
+      value={value}
+      onChange={onChange}
+      error={error}
+      helperText={helperText}
+    />
+  </Box>
+);
 
 const CreateAssociado = () => {
   const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    login: '',
-    senha: '',
-    nome: '',
-    cpf: '',
-    dataDeNascimento: ''
-  });
-
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success'); // Pode ser 'success' ou 'error'
-
+  const [formData, setFormData] = useState(INITIAL_STATE);
   const [errors, setErrors] = useState({});
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+
+  const notify = (message, severity = 'error') => {
+    setSnackbar({ open: true, message, severity });
+  };
 
   const handleChange = (campo) => (event) => {
-    setFormData({ ...formData, [campo]: event.target.value });
+    setFormData(prev => ({ ...prev, [campo]: event.target.value }));
+    setErrors(prev => ({ ...prev, [campo]: '' }));
   };
 
   const validateForm = () => {
     let tempErrors = {};
-    let isValid = true;
-
-    if (!formData.login) {
-      tempErrors.login = 'Login é obrigatório';
-      isValid = false;
-    }
-    if (!formData.senha) {
-      tempErrors.senha = 'Senha é obrigatória';
-      isValid = false;
-    }
-    if (!formData.nome) {
-      tempErrors.nome = 'Nome é obrigatório';
-      isValid = false;
-    }
-    if (!formData.cpf) {
-      tempErrors.cpf = 'CPF é obrigatório';
-      isValid = false;
-    }
-    if (!formData.dataDeNascimento) {
-      tempErrors.dataDeNascimento = 'Data de Nascimento é obrigatória';
-      isValid = false;
-    }
+    if (!formData.login) tempErrors.login = 'Login é obrigatório';
+    if (!formData.senha) tempErrors.senha = 'Senha é obrigatória';
+    if (!formData.nome) tempErrors.nome = 'Nome é obrigatório';
+    if (!formData.cpf) tempErrors.cpf = 'CPF é obrigatório';
+    if (!formData.dataDeNascimento) tempErrors.dataDeNascimento = 'Data de Nascimento é obrigatória';
 
     setErrors(tempErrors);
-    return isValid;
+    return Object.keys(tempErrors).length === 0;
   };
 
   const salvar = async () => {
     if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:8080/api/associado', formData);
-        console.log(response);
-        setSnackbarMessage('Cadastro realizado com sucesso!');
-        setSnackbarSeverity('success');
-        setSnackbarOpen(true);
-        // Resetando os campos do formulário após sucesso
-        setFormData({
-          login: '',
-          senha: '',
-          nome: '',
-          cpf: '',
-          dataDeNascimento: ''
-        });
+        await axios.post('http://localhost:8080/api/associado', formData);
+        notify('Cadastro realizado com sucesso!', 'success');
+        setFormData(INITIAL_STATE);
         setErrors({});
       } catch (error) {
-        console.log(error.response);
-        setSnackbarMessage('Erro ao realizar o cadastro!');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
+        notify('Erro ao realizar o cadastro!', 'error');
       }
-      console.log('request finished');
     } else {
-      setSnackbarMessage('Por favor, preencha todos os campos obrigatórios.');
-      setSnackbarSeverity('error');
-      setSnackbarOpen(true);
+      notify('Por favor, preencha todos os campos obrigatórios.', 'error');
     }
   };
 
   const cancel = () => {
-    console.log('cancel');
-  };
-
-  const goToAdvogado = () => {
-    navigate("/sessao/createAdvogado");
-  };
-
-  const goToCliente = () => {
-    navigate("/sessao/createCliente");
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbarOpen(false);
+    setFormData(INITIAL_STATE);
+    setErrors({});
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-lg-12">
-          <div className="bs-component">
-            <div style={{ marginTop: '70px' }}>
-              <ButtonGroup variant="contained" aria-label="Basic button group">
-                <Button style={{ backgroundColor: 'white', color: 'grey' }} onClick={goToCliente}>Cliente</Button>
-                <Button style={{ backgroundColor: 'white', color: 'grey' }} onClick={goToAdvogado}>Advogado</Button>
-                <Button style={{ backgroundColor: 'grey' }}>Associado</Button>
-              </ButtonGroup>
-              <div style={{ width: 1100, height: 470, background: 'white', border: '2px #838383 solid' }}>
-                <div style={{ width: 325, height: 50, color: '#838383', fontSize: 27, fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word', marginTop: '15px', marginLeft: '90px' }}>Dados pessoais</div>
-                <div style={{ marginTop: '35px', marginLeft: '50px' }}>
-                  <CustomTextField
-                    label="LOGIN"
-                    value={formData.login}
-                    onChange={handleChange('login')}
-                    error={!!errors.login}
-                    helperText={errors.login}
-                    autoComplete="off"
-                  />
-                  <CustomTextField
-                    label="SENHA"
-                    type="password"
-                    value={formData.senha}
-                    onChange={handleChange('senha')}
-                    error={!!errors.senha}
-                    helperText={errors.senha}
-                    autoComplete="new-password"
-                  />
-                  <CustomTextField
-                    label="NOME"
-                    value={formData.nome}
-                    onChange={handleChange('nome')}
-                    error={!!errors.nome}
-                    helperText={errors.nome}
-                  />
-                  <div style={{gap: '20px', marginLeft: '680px', marginTop: '-335px' }}>
-                    <CustomTextField
-                      label="CPF"
-                      value={formData.cpf}
-                      onChange={handleChange('cpf')}
-                      error={!!errors.cpf}
-                      helperText={errors.cpf}
-                    />
-                    <CustomTextField
-                      label="DATA DE NASCIMENTO"
-                      type="date"
-                      value={formData.dataDeNascimento}
-                      onChange={handleChange('dataDeNascimento')}
-                      error={!!errors.dataDeNascimento}
-                      helperText={errors.dataDeNascimento}
-                    />
-                  </div>
-                </div>
+    <div className="create-associado-wrapper">
+      {/* Abas Superiores */}
+      <ButtonGroup className="tab-group" variant="contained" aria-label="Navegação entre perfis">
+        <Button className="tab-btn-inactive" onClick={() => navigate("/sessao/createCliente")}>Cliente</Button>
+        <Button className="tab-btn-inactive" onClick={() => navigate("/sessao/createAdvogado")}>Advogado</Button>
+        <Button className="tab-btn-active">Associado</Button>
+      </ButtonGroup>
 
-                <div style={{ marginTop: '180px' }}>
-                  <Button onClick={cancel} variant="contained" style={{ width: 120, height: 40, backgroundColor: 'grey' }}>Cancelar</Button>
-                  <Button onClick={salvar} variant="contained" style={{ width: 120, height: 40, backgroundColor: 'grey', marginLeft: '850px' }}>Salvar</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Cartão do Formulário */}
+      <div className="associado-card">
+        <Grid container spacing={3} className="associado-grid-container">
+          {/* Coluna 1: Dados Pessoais */}
+          <Grid item xs={6}>
+            <h2 className="section-title">Dados pessoais</h2>
+
+            <FormField
+              label="LOGIN"
+              value={formData.login}
+              onChange={handleChange('login')}
+              error={!!errors.login}
+              helperText={errors.login}
+              autoComplete="off"
+            />
+            <FormField
+              label="SENHA"
+              type="password"
+              value={formData.senha}
+              onChange={handleChange('senha')}
+              error={!!errors.senha}
+              helperText={errors.senha}
+              autoComplete="new-password"
+            />
+            <FormField
+              label="NOME"
+              value={formData.nome}
+              onChange={handleChange('nome')}
+              error={!!errors.nome}
+              helperText={errors.nome}
+            />
+          </Grid>
+
+          {/* Coluna 2: Documentação */}
+          <Grid item xs={6}>
+            {/* Espaçamento em branco no título para alinhar com o grid oposto */}
+            <h2 className="section-title">&nbsp;</h2>
+
+            <FormField
+              label="CPF"
+              value={formData.cpf}
+              onChange={handleChange('cpf')}
+              error={!!errors.cpf}
+              helperText={errors.cpf}
+            />
+            <FormField
+              label="DATA DE NASCIMENTO"
+              type="date"
+              value={formData.dataDeNascimento}
+              onChange={handleChange('dataDeNascimento')}
+              error={!!errors.dataDeNascimento}
+              helperText={errors.dataDeNascimento}
+            />
+          </Grid>
+        </Grid>
       </div>
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
-          {snackbarMessage}
+
+      {/* Rodapé de Ações */}
+      <div className="actions-container">
+        <Button onClick={cancel} variant="contained" className="action-btn">Cancelar</Button>
+        <Button onClick={salvar} variant="contained" className="action-btn">Salvar</Button>
+      </div>
+
+      <Snackbar 
+        open={snackbar.open} 
+        autoHideDuration={6000} 
+        onClose={() => setSnackbar(prev => ({ ...prev, open: false }))}
+      >
+        <Alert 
+          onClose={() => setSnackbar(prev => ({ ...prev, open: false }))} 
+          severity={snackbar.severity} 
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
         </Alert>
       </Snackbar>
     </div>

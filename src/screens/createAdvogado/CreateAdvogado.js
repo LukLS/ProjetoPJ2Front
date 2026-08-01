@@ -1,220 +1,193 @@
 import React, { useState } from "react";
 import "./CreateAdvogado.css";
 import axios from "axios";
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
+import { TextField, Button, ButtonGroup, Snackbar, Alert, Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import CustomTextField from '../../components/CustomTextField';
+
+const INITIAL_STATE = {
+  login: '',
+  senha: '',
+  nome: '',
+  cpf: '',
+  inscricao: '',
+  estadoDeEmissao: '',
+  filiacao: '',
+  dataDeNascimento: ''
+};
+
+// Componente de Campo de Formulário idêntico ao de Projetos.jsx
+const FormField = ({ label, value, onChange, error, helperText, type }) => (
+  <Box sx={{ marginBottom: 1 }}>
+    <div className="field-label">{label}</div>
+    <TextField
+      hiddenLabel
+      variant="filled"
+      size="small"
+      type={type}
+      className="custom-textfield"
+      value={value}
+      onChange={onChange}
+      error={error}
+      helperText={helperText}
+    />
+  </Box>
+);
 
 const CreateAdvogado = () => {
   const navigate = useNavigate();
-
-  const [state, setState] = useState({
-    login: '',
-    senha: '',
-    nome: '',
-    cpf: '',
-    inscricao: '',
-    estadoDeEmissao: '',
-    filiacao: '',
-    dataDeNascimento: ''
-  });
-
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success'); // Pode ser 'success' ou 'error'
-
+  const [state, setState] = useState(INITIAL_STATE);
   const [errors, setErrors] = useState({});
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+
+  const notify = (message, severity = 'error') => {
+    setSnackbar({ open: true, message, severity });
+  };
 
   const handleChange = (campo) => (event) => {
-    setState({ ...state, [campo]: event.target.value });
-  }
+    setState(prev => ({ ...prev, [campo]: event.target.value }));
+  };
 
   const validateForm = () => {
     let tempErrors = {};
-    let isValid = true;
-
-    if (!state.login) {
-      tempErrors.login = 'Login é obrigatório';
-      isValid = false;
-    }
-    if (!state.senha) {
-      tempErrors.senha = 'Senha é obrigatória';
-      isValid = false;
-    }
-    if (!state.nome) {
-      tempErrors.nome = 'Nome é obrigatório';
-      isValid = false;
-    }
-    if (!state.cpf) {
-      tempErrors.cpf = 'CPF é obrigatório';
-      isValid = false;
-    }
-    if (!state.inscricao) {
-      tempErrors.inscricao = 'Inscrição é obrigatória';
-      isValid = false;
-    }
-    if (!state.estadoDeEmissao) {
-      tempErrors.estadoDeEmissao = 'Estado de Emissão é obrigatório';
-      isValid = false;
-    }
-    if (!state.filiacao) {
-      tempErrors.filiacao = 'Filiação é obrigatória';
-      isValid = false;
-    }
-    if (!state.dataDeNascimento) {
-      tempErrors.dataDeNascimento = 'Data de Nascimento é obrigatória';
-      isValid = false;
-    }
+    if (!state.login) tempErrors.login = 'Login é obrigatório';
+    if (!state.senha) tempErrors.senha = 'Senha é obrigatória';
+    if (!state.nome) tempErrors.nome = 'Nome é obrigatório';
+    if (!state.cpf) tempErrors.cpf = 'CPF é obrigatório';
+    if (!state.inscricao) tempErrors.inscricao = 'Inscrição é obrigatória';
+    if (!state.estadoDeEmissao) tempErrors.estadoDeEmissao = 'Estado de Emissão é obrigatório';
+    if (!state.filiacao) tempErrors.filiacao = 'Filiação é obrigatória';
+    if (!state.dataDeNascimento) tempErrors.dataDeNascimento = 'Data de Nascimento é obrigatória';
 
     setErrors(tempErrors);
-    return isValid;
-  }
+    return Object.keys(tempErrors).length === 0;
+  };
 
   const salvar = async () => {
     if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:8080/api/advogado', state);
-        console.log(response);
-        setSnackbarMessage('Cadastro realizado com sucesso!');
-        setSnackbarSeverity('success');
-        setSnackbarOpen(true);
-        setState({
-          login: '',
-          senha: '',
-          nome: '',
-          cpf: '',
-          inscricao: '',
-          estadoDeEmissao: '',
-          filiacao: '',
-          dataDeNascimento: ''
-        });
+        await axios.post('http://localhost:8080/api/advogado', state);
+        notify('Cadastro realizado com sucesso!', 'success');
+        setState(INITIAL_STATE);
         setErrors({});
       } catch (error) {
-        console.log(error.response);
-        setSnackbarMessage('Erro ao realizar o cadastro!');
-        setSnackbarSeverity('error');
-        setSnackbarOpen(true);
+        notify('Erro ao realizar o cadastro!', 'error');
       }
     } else {
-      setSnackbarMessage('Por favor, preencha todos os campos obrigatórios.');
-      setSnackbarSeverity('error');
-      setSnackbarOpen(true);
+      notify('Por favor, preencha todos os campos obrigatórios.', 'error');
     }
-  }
+  };
 
   const cancel = () => {
-    console.log('cancel');
-  }
-
-  const goToAssociado = () => {
-    navigate("/sessao/createAssociado");
-  }
-
-  const goToCliente = () => {
-    navigate("/sessao/createCliente");
-  }
-
-  const handleCloseSnackbar = () => {
-    setSnackbarOpen(false);
+    setState(INITIAL_STATE);
+    setErrors({});
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-lg-12">
-          <div className="bs-component">
-            <div style={{ marginTop: '70px' }}>
-              <ButtonGroup variant="contained" aria-label="Basic button group">
-                <Button style={{ backgroundColor: 'white', color: 'grey' }} onClick={goToCliente}>Cliente</Button>
-                <Button style={{ backgroundColor: 'grey' }}>Advogado</Button>
-                <Button style={{ backgroundColor: 'white', color: 'grey' }} onClick={goToAssociado}>Associado</Button>
-              </ButtonGroup>
-              <div style={{ width: 1100, height: 570, background: 'white', border: '2px #838383 solid' }}>
-                <div style={{ width: 325, height: 50, color: '#838383', fontSize: 27, fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word', marginTop: '15px', marginLeft: '90px' }}>Dados pessoais</div>
-                <div style={{ width: 325, height: 50, color: '#838383', fontSize: 27, fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word', marginTop: '-50px', marginLeft: '780px' }}>OAB</div>
-                <div style={{ marginTop: '35px', marginLeft: '50px' }}>
-                  <CustomTextField
-                    label="LOGIN"
-                    value={state.login}
-                    onChange={handleChange('login')}
-                    error={!!errors.login}
-                    helperText={errors.login}
-                  />
-                  <CustomTextField
-                    label="SENHA"
-                    type="password"
-                    value={state.senha}
-                    onChange={handleChange('senha')}
-                    error={!!errors.senha}
-                    helperText={errors.senha}
-                  />
-                  <CustomTextField
-                    label="NOME"
-                    value={state.nome}
-                    onChange={handleChange('nome')}
-                    error={!!errors.nome}
-                    helperText={errors.nome}
-                  />
-                  <CustomTextField
-                    label="CPF"
-                    value={state.cpf}
-                    onChange={handleChange('cpf')}
-                    error={!!errors.cpf}
-                    helperText={errors.cpf}
-                  />
-                </div>
+    <div className="create-advogado-wrapper">
+      {/* Abas Superiores */}
+      <ButtonGroup className="tab-group" variant="contained" aria-label="Navegação entre perfis">
+        <Button className="tab-btn-inactive" onClick={() => navigate("/sessao/createCliente")}>Cliente</Button>
+        <Button className="tab-btn-active">Advogado</Button>
+        <Button className="tab-btn-inactive" onClick={() => navigate("/sessao/createAssociado")}>Associado</Button>
+      </ButtonGroup>
 
-                <div style={{gap: '20px', marginLeft: '680px', marginTop: '-450px'  }}>
-                  <CustomTextField
-                    label="INSCRIÇÃO"
-                    value={state.inscricao}
-                    onChange={handleChange('inscricao')}
-                    error={!!errors.inscricao}
-                    helperText={errors.inscricao}
-                  />
-                  <CustomTextField
-                    label="ESTADO DE EMISSÃO"
-                    value={state.estadoDeEmissao}
-                    onChange={handleChange('estadoDeEmissao')}
-                    error={!!errors.estadoDeEmissao}
-                    helperText={errors.estadoDeEmissao}
-                  />
-                  <CustomTextField
-                    label="FILIAÇÃO"
-                    value={state.filiacao}
-                    onChange={handleChange('filiacao')}
-                    error={!!errors.filiacao}
-                    helperText={errors.filiacao}
-                  />
-                  <CustomTextField
-                    label="DATA DE NASCIMENTO"
-                    type="date"
-                    value={state.dataDeNascimento}
-                    onChange={handleChange('dataDeNascimento')}
-                    error={!!errors.dataDeNascimento}
-                    helperText={errors.dataDeNascimento}
-                  />
-                </div>
+      {/* Cartão de Formulário com Grid do MUI */}
+      <div className="advogado-card">
+        <Grid container spacing={3} className="advogado-grid-container">
+          {/* Coluna 1: Dados Pessoais */}
+          <Grid item xs={6}>
+            <h2 className="section-title">Dados pessoais</h2>
+            
+            <FormField
+              label="LOGIN"
+              value={state.login}
+              onChange={handleChange('login')}
+              error={!!errors.login}
+              helperText={errors.login}
+            />
+            <FormField
+              label="SENHA"
+              type="password"
+              value={state.senha}
+              onChange={handleChange('senha')}
+              error={!!errors.senha}
+              helperText={errors.senha}
+            />
+            <FormField
+              label="NOME"
+              value={state.nome}
+              onChange={handleChange('nome')}
+              error={!!errors.nome}
+              helperText={errors.nome}
+            />
+            <FormField
+              label="CPF"
+              value={state.cpf}
+              onChange={handleChange('cpf')}
+              error={!!errors.cpf}
+              helperText={errors.cpf}
+            />
+          </Grid>
 
-                <div style={{ marginTop: '60px' }}>
-                  <Button onClick={cancel} variant="contained" style={{ width: 120, height: 40, backgroundColor: 'grey' }}>Cancelar</Button>
-                  <Button onClick={salvar} variant="contained" style={{ width: 120, height: 40, backgroundColor: 'grey', marginLeft: '850px' }}>Salvar</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* Coluna 2: Dados OAB */}
+          <Grid item xs={6}>
+            <h2 className="section-title">OAB</h2>
+
+            <FormField
+              label="INSCRIÇÃO"
+              value={state.inscricao}
+              onChange={handleChange('inscricao')}
+              error={!!errors.inscricao}
+              helperText={errors.inscricao}
+            />
+            <FormField
+              label="ESTADO DE EMISSÃO"
+              value={state.estadoDeEmissao}
+              onChange={handleChange('estadoDeEmissao')}
+              error={!!errors.estadoDeEmissao}
+              helperText={errors.estadoDeEmissao}
+            />
+            <FormField
+              label="FILIAÇÃO"
+              value={state.filiacao}
+              onChange={handleChange('filiacao')}
+              error={!!errors.filiacao}
+              helperText={errors.filiacao}
+            />
+            <FormField
+              label="DATA DE NASCIMENTO"
+              type="date"
+              value={state.dataDeNascimento}
+              onChange={handleChange('dataDeNascimento')}
+              error={!!errors.dataDeNascimento}
+              helperText={errors.dataDeNascimento}
+            />
+          </Grid>
+        </Grid>
       </div>
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
-          {snackbarMessage}
+
+      {/* Rodapé de Ações */}
+      <div className="actions-container">
+        <Button onClick={cancel} variant="contained" className="action-btn">Cancelar</Button>
+        <Button onClick={salvar} variant="contained" className="action-btn">Salvar</Button>
+      </div>
+
+      {/* Snackbar */}
+      <Snackbar 
+        open={snackbar.open} 
+        autoHideDuration={6000} 
+        onClose={() => setSnackbar(prev => ({ ...prev, open: false }))}
+      >
+        <Alert 
+          onClose={() => setSnackbar(prev => ({ ...prev, open: false }))} 
+          severity={snackbar.severity} 
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
         </Alert>
       </Snackbar>
     </div>
   );
-}
+};
 
 export default CreateAdvogado;

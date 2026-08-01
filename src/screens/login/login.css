@@ -1,0 +1,148 @@
+/* Container Principal (Fundo de tela cheia) */
+.login-form, 
+.login-page-container {
+  background-color: #ECECEC;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-wrapper {
+  width: 720px;
+  height: 512px;
+  background: #ECECEC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Cartão Cinza do Login */
+.login-card {
+  width: 309.5px;
+  height: 430.5px;
+  position: relative;
+  background: #DBDBDB;
+  border-radius: 15px;
+}
+
+/* Logo e Subtítulo */
+.login-logo {
+  left: 82.5px;
+  top: 26.5px;
+  position: absolute;
+  color: #838383;
+  font-size: 50px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.login-welcome {
+  left: 81.5px;
+  top: 87px;
+  position: absolute;
+  color: #838383;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+/* Container das Caixas de Texto */
+.login-inputs-container {
+  width: 245px;
+  left: 32px;
+  top: 145px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Espaçamento exato entre os campos */
+}
+
+.login-field-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-label {
+  color: #838383;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  margin-left: 5px;
+  margin-bottom: 2px;
+}
+
+/* Estilização do Campo do Material-UI sem cortes */
+.login-textfield {
+  width: 245px !important;
+}
+
+.login-textfield .MuiFilledInput-root {
+  background-color: #C2C2C2 !important;
+  border-radius: 3px !important;
+  height: 32px !important;
+  padding: 0 !important;
+}
+
+.login-textfield .MuiFilledInput-input {
+  padding: 6px 10px !important;
+  font-size: 14px !important;
+}
+
+/* Remove a linha inferior padrão do variant="filled" do Material-UI */
+.login-textfield .MuiFilledInput-root:before,
+.login-textfield .MuiFilledInput-root:after {
+  display: none !important;
+}
+
+/* Mensagem de erro */
+.error-message {
+  color: red;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Botão Entrar */
+.login-btn-container {
+  left: 34px;
+  top: 345.5px;
+  position: absolute;
+  width: 245px;
+}
+
+.login-submit-btn {
+  width: 245px !important;
+  height: 27px !important;
+  background-color: grey !important;
+  box-shadow: none !important;
+  border-radius: 2px !important;
+  font-size: 13px !important;
+}
+
+.login-submit-btn:hover {
+  background-color: #6d6d6d !important;
+}
+
+/* Link de Esqueci a Senha */
+.login-forgot-link {
+  cursor: pointer;
+  left: 95px;
+  top: 382.5px;
+  position: absolute;
+  color: #838383;
+  font-size: 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.login-forgot-link:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,142 @@
+/* Container Principal */
+.login-form, 
+.login-page-container {
+  background-color: #ECECEC;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-wrapper {
+  width: 720px;
+  height: 512px;
+  background: #ECECEC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Cartão Cinza */
+.login-card {
+  width: 309.5px;
+  height: 430.5px;
+  position: relative;
+  background: #DBDBDB;
+  border-radius: 15px;
+}
+
+/* Logo e Bem Vindo */
+.login-logo {
+  left: 82.5px;
+  top: 26.5px;
+  position: absolute;
+  color: #838383;
+  font-size: 50px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+.login-welcome {
+  left: 81.5px;
+  top: 87px;
+  position: absolute;
+  color: #838383;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+/* Container de Input */
+.login-inputs-container {
+  width: 245px;
+  left: 32px;
+  top: 159.5px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-field-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-label {
+  color: #838383;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  margin-left: 5px;
+  margin-bottom: 2px;
+}
+
+/* Inputs Material-UI */
+.login-textfield {
+  width: 245px !important;
+}
+
+.login-textfield .MuiFilledInput-root {
+  background-color: #CECECE !important;
+  border-radius: 2px !important;
+  height: 30px !important;
+  padding: 0 !important;
+}
+
+.login-textfield .MuiFilledInput-input {
+  padding: 0 8px !important;
+  font-size: 13px !important;
+  height: 30px !important;
+  box-sizing: border-box !important;
+}
+
+.login-textfield .MuiFilledInput-root:before,
+.login-textfield .MuiFilledInput-root:after {
+  display: none !important;
+}
+
+/* Feedback de Mensagens */
+.feedback-message {
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.feedback-message.error {
+  color: #d32f2f;
+}
+
+.feedback-message.success {
+  color: #2e7d32;
+}
+
+/* Botões da Tela Esqueci Senha */
+.forgot-btn-group {
+  left: 34px;
+  top: 312px;
+  position: absolute;
+  width: 245px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-submit-btn {
+  width: 245px !important;
+  height: 27px !important;
+  background-color: grey !important;
+  box-shadow: none !important;
+  border-radius: 2px !important;
+  font-size: 11px !important;
+  color: #FFFFFF !important;
+}
+
+.login-submit-btn:hover {
+  background-color: #6a6a6a !important;
+}
